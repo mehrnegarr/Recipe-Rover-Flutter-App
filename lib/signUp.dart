@@ -1,3 +1,5 @@
+// ignore_for_file: file_names, must_be_immutable, use_build_context_synchronously, avoid_print
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +13,8 @@ class RegistrationForm extends StatelessWidget {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   final AuthService authService = AuthService();
+
+  RegistrationForm({super.key});
 
   bool isValidEmail(String email) {
     return RegExp(r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$')
@@ -46,12 +50,6 @@ class RegistrationForm extends StatelessWidget {
               "password": passwordController.text,
             });
 
-            final userDetails = {
-              "name": nameController.text,
-              "email": emailController.text,
-              "password": passwordController.text,
-            };
-
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(
@@ -64,16 +62,19 @@ class RegistrationForm extends StatelessWidget {
         if (e is FirebaseAuthException) {
           if (e.code == 'email-already-in-use') {
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
+              const SnackBar(
                 content: Text(
-                    "Email is already in use. Please use a different email."),
+                  "Email is already in use. Please use a different email.",
+                ),
                 backgroundColor: Colors.red,
               ),
             );
           } else {
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text("Registration failed. Please try again."),
+              const SnackBar(
+                content: Text(
+                  "Registration failed. Please try again.",
+                ),
                 backgroundColor: Colors.red,
               ),
             );
@@ -102,30 +103,34 @@ class RegistrationForm extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            SizedBox(height: 80),
-            Padding(
+            const SizedBox(height: 80),
+            const Padding(
               padding: EdgeInsets.all(20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
                     "Register",
-                    style: TextStyle(color: Colors.white, fontSize: 40),
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 40,
+                    ),
                   ),
-                  SizedBox(
-                    height: 10,
-                  ),
+                  SizedBox(height: 10),
                   Text(
                     "Create an Account",
-                    style: TextStyle(color: Colors.white, fontSize: 18),
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                    ),
                   ),
                 ],
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Expanded(
               child: Container(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(60),
@@ -139,12 +144,12 @@ class RegistrationForm extends StatelessWidget {
                       key: _formKey,
                       child: Column(
                         children: <Widget>[
-                          SizedBox(height: 60),
+                          const SizedBox(height: 60),
                           Container(
                             decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(10),
-                              boxShadow: [
+                              boxShadow: const [
                                 BoxShadow(
                                   color: Color.fromRGBO(88, 22, 94, 0.298),
                                   blurRadius: 20,
@@ -165,9 +170,11 @@ class RegistrationForm extends StatelessWidget {
                                   ),
                                   child: TextFormField(
                                     controller: nameController,
-                                    decoration: InputDecoration(
+                                    decoration: const InputDecoration(
                                       hintText: "Name",
-                                      hintStyle: TextStyle(color: Colors.grey),
+                                      hintStyle: TextStyle(
+                                        color: Colors.grey,
+                                      ),
                                       border: InputBorder.none,
                                     ),
                                     validator: (value) {
@@ -190,9 +197,11 @@ class RegistrationForm extends StatelessWidget {
                                   child: TextFormField(
                                     controller: ageController,
                                     keyboardType: TextInputType.number,
-                                    decoration: InputDecoration(
+                                    decoration: const InputDecoration(
                                       hintText: "Age",
-                                      hintStyle: TextStyle(color: Colors.grey),
+                                      hintStyle: TextStyle(
+                                        color: Colors.grey,
+                                      ),
                                       border: InputBorder.none,
                                     ),
                                     validator: (value) {
@@ -217,9 +226,11 @@ class RegistrationForm extends StatelessWidget {
                                   ),
                                   child: TextFormField(
                                     controller: emailController,
-                                    decoration: InputDecoration(
+                                    decoration: const InputDecoration(
                                       hintText: "Email",
-                                      hintStyle: TextStyle(color: Colors.grey),
+                                      hintStyle: TextStyle(
+                                        color: Colors.grey,
+                                      ),
                                       border: InputBorder.none,
                                     ),
                                     validator: (value) {
@@ -245,14 +256,14 @@ class RegistrationForm extends StatelessWidget {
                                   child: TextFormField(
                                     controller: passwordController,
                                     obscureText: true,
-                                    decoration: InputDecoration(
+                                    decoration: const InputDecoration(
                                       hintText: "Password",
-                                      hintStyle: TextStyle(color: Colors.grey),
+                                      hintStyle: TextStyle(
+                                        color: Colors.grey,
+                                      ),
                                       border: InputBorder.none,
                                     ),
                                     validator: (value) {
-                                      RegExp regex = RegExp(
-                                          r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
                                       if (value!.length < 8) {
                                         return "Password must be 8 bit long having a special character and an uppercase character also an integer";
                                       }
@@ -263,7 +274,7 @@ class RegistrationForm extends StatelessWidget {
                               ],
                             ),
                           ),
-                          SizedBox(height: 20.0),
+                          const SizedBox(height: 20.0),
                           ElevatedButton(
                             onPressed: () {
                               signUp();
@@ -284,14 +295,19 @@ class RegistrationForm extends StatelessWidget {
                               ),
                             ),
                           ),
-                          SizedBox(height: 10.0),
+                          const SizedBox(height: 10.0),
                           TextButton(
                             onPressed: () {
-                              Navigator.pushNamed(context, '/signin');
+                              Navigator.pushNamed(
+                                context,
+                                '/signin',
+                              );
                             },
                             child: const Text(
                               "Already have an account? Sign In",
-                              style: TextStyle(color: Colors.blueGrey),
+                              style: TextStyle(
+                                color: Colors.blueGrey,
+                              ),
                             ),
                           ),
                         ],
