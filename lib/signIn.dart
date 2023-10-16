@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable, file_names, use_build_context_synchronously
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:recipe_rover/HomePage.dart';
@@ -10,6 +12,8 @@ class SignInForm extends StatelessWidget {
   TextEditingController passwordController = TextEditingController();
   final AuthService authService = AuthService();
 
+  SignInForm({super.key});
+
   @override
   Widget build(BuildContext context) {
     signIn() async {
@@ -21,18 +25,18 @@ class SignInForm extends StatelessWidget {
           );
 
           if (user != null) {
-            final userDetails = await authService.getUserDetails(user.email!);
-
             // Show success message
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
+              const SnackBar(
                 content: Text("You successfully signed in!"),
                 backgroundColor: Colors.orange,
               ),
             );
 
             // Delay navigation to allow SnackBar to be displayed
-            await Future.delayed(Duration(seconds: 2));
+            await Future.delayed(
+              const Duration(seconds: 2),
+            );
 
             Navigator.of(context).pushReplacement(
               MaterialPageRoute(
@@ -42,8 +46,10 @@ class SignInForm extends StatelessWidget {
           } else {
             // User is not registered or password is incorrect
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text("Invalid email or password"),
+              const SnackBar(
+                content: Text(
+                  "Invalid email or password",
+                ),
                 backgroundColor: Colors.orange,
               ),
             );
@@ -53,8 +59,10 @@ class SignInForm extends StatelessWidget {
         print("Error during sign-in: $e");
         // Handle other errors, if any
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text("Something went wrong! Please try again."),
+          const SnackBar(
+            content: Text(
+              "Something went wrong! Please try again.",
+            ),
             backgroundColor: Colors.red,
           ),
         );
@@ -65,18 +73,19 @@ class SignInForm extends StatelessWidget {
       body: Container(
         width: double.infinity,
         decoration: BoxDecoration(
-          gradient: LinearGradient(begin: Alignment.topCenter, colors: [
-            Colors.orange[500]!,
-            Colors.orange[300]!,
-            Colors.orange[300]!
-          ]),
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            colors: [
+              Colors.orange[500]!,
+              Colors.orange[300]!,
+              Colors.orange[300]!
+            ],
+          ),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            const SizedBox(
-              height: 80,
-            ),
+            const SizedBox(height: 80),
             const Padding(
               padding: EdgeInsets.all(20),
               child: Column(
@@ -84,14 +93,18 @@ class SignInForm extends StatelessWidget {
                 children: <Widget>[
                   Text(
                     "Login",
-                    style: TextStyle(color: Colors.white, fontSize: 40),
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 40,
+                    ),
                   ),
-                  SizedBox(
-                    height: 10,
-                  ),
+                  SizedBox(height: 10),
                   Text(
                     "Welcome Back",
-                    style: TextStyle(color: Colors.white, fontSize: 18),
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                    ),
                   ),
                 ],
               ),
@@ -117,76 +130,79 @@ class SignInForm extends StatelessWidget {
                             height: 60,
                           ),
                           AnimatedOpacity(
-                              opacity: 1.0,
-                              duration: const Duration(seconds: 1),
-                              curve: Curves.easeInOut,
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(10),
-                                  boxShadow: const [
-                                    BoxShadow(
-                                      color: Color.fromRGBO(88, 22, 94, 0.298),
-                                      blurRadius: 20,
-                                      offset: Offset(0, 10),
-                                    )
-                                  ],
-                                ),
-                                child: Column(
-                                  children: <Widget>[
-                                    Container(
-                                      padding: const EdgeInsets.all(10),
-                                      decoration: BoxDecoration(
-                                        border: Border(
-                                          bottom: BorderSide(
-                                            color: Colors.grey[200]!,
-                                          ),
+                            opacity: 1.0,
+                            duration: const Duration(seconds: 1),
+                            curve: Curves.easeInOut,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(10),
+                                boxShadow: const [
+                                  BoxShadow(
+                                    color: Color.fromRGBO(88, 22, 94, 0.298),
+                                    blurRadius: 20,
+                                    offset: Offset(0, 10),
+                                  )
+                                ],
+                              ),
+                              child: Column(
+                                children: <Widget>[
+                                  Container(
+                                    padding: const EdgeInsets.all(10),
+                                    decoration: BoxDecoration(
+                                      border: Border(
+                                        bottom: BorderSide(
+                                          color: Colors.grey[200]!,
                                         ),
                                       ),
-                                      child: TextFormField(
-                                        controller: emailController,
+                                    ),
+                                    child: TextFormField(
+                                      controller: emailController,
+                                      decoration: const InputDecoration(
+                                        hintText: "Email ",
+                                        hintStyle: TextStyle(
+                                          color: Colors.grey,
+                                        ),
+                                        border: InputBorder.none,
+                                      ),
+                                      validator: (value) {
+                                        if (value!.isEmpty) {
+                                          return 'Please enter your email';
+                                        }
+                                        return null;
+                                      },
+                                    ),
+                                  ),
+                                  Container(
+                                    padding: const EdgeInsets.all(10),
+                                    decoration: BoxDecoration(
+                                      border: Border(
+                                        bottom: BorderSide(
+                                          color: Colors.grey[200]!,
+                                        ),
+                                      ),
+                                    ),
+                                    child: TextFormField(
+                                        controller: passwordController,
+                                        obscureText: true,
                                         decoration: const InputDecoration(
-                                          hintText: "Email ",
-                                          hintStyle:
-                                              TextStyle(color: Colors.grey),
+                                          hintText: "Password",
+                                          hintStyle: TextStyle(
+                                            color: Colors.grey,
+                                          ),
                                           border: InputBorder.none,
                                         ),
                                         validator: (value) {
                                           if (value!.isEmpty) {
-                                            return 'Please enter your email';
+                                            return 'Please enter your password';
                                           }
                                           return null;
-                                        },
-                                      ),
-                                    ),
-                                    Container(
-                                      padding: const EdgeInsets.all(10),
-                                      decoration: BoxDecoration(
-                                        border: Border(
-                                          bottom: BorderSide(
-                                            color: Colors.grey[200]!,
-                                          ),
-                                        ),
-                                      ),
-                                      child: TextFormField(
-                                          controller: passwordController,
-                                          obscureText: true,
-                                          decoration: const InputDecoration(
-                                            hintText: "Password",
-                                            hintStyle:
-                                                TextStyle(color: Colors.grey),
-                                            border: InputBorder.none,
-                                          ),
-                                          validator: (value) {
-                                            if (value!.isEmpty) {
-                                              return 'Please enter your password';
-                                            }
-                                            return null;
-                                          }),
-                                    ),
-                                  ],
-                                ),
-                              )),
+                                        }),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
                           const SizedBox(height: 20.0),
                           Column(
                             children: [
@@ -197,31 +213,40 @@ class SignInForm extends StatelessWidget {
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: Colors.orange[500],
                                   shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(50)),
+                                    borderRadius: BorderRadius.circular(50),
+                                  ),
                                   elevation: 2,
                                   minimumSize: const Size(200, 50),
                                 ),
                                 child: const Text(
                                   "Login",
                                   style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold),
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                               ),
                               const Text(
                                 'Forgot Password?',
-                                style: TextStyle(color: Colors.blueGrey),
+                                style: TextStyle(
+                                  color: Colors.blueGrey,
+                                ),
                               ),
                             ],
                           ),
                           const SizedBox(height: 10.0),
                           TextButton(
                             onPressed: () {
-                              Navigator.pushNamed(context, '/signup');
+                              Navigator.pushNamed(
+                                context,
+                                '/signup',
+                              );
                             },
                             child: const Text(
                               "Don't have an account? Sign Up",
-                              style: TextStyle(color: Colors.blueGrey),
+                              style: TextStyle(
+                                color: Colors.blueGrey,
+                              ),
                             ),
                           ),
                         ],
