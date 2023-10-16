@@ -1,13 +1,20 @@
+// ignore_for_file: file_names
+
 import 'dart:async';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatelessWidget {
+  const SplashScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     // Use a Future.delayed to simulate a delay
-    Future.delayed(Duration(seconds: 1), () {
+    Future.delayed(const Duration(seconds: 1), () {
       // Navigate to the home screen after the delay
-      Navigator.pushReplacementNamed(context, '/recipe');
+      Navigator.pushReplacementNamed(
+        context,
+        '/recipe',
+      );
     });
 
     return Scaffold(
@@ -24,7 +31,7 @@ class SplashScreen extends StatelessWidget {
                 height: 500,
                 width: 500,
               ),
-              SizedBox(height: 16.0),
+              const SizedBox(height: 16.0),
             ],
           ),
         ),
