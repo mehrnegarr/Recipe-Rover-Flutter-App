@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable, file_names
+
 import 'package:flutter/material.dart';
 
 class RegistrationForm extends StatelessWidget {
@@ -7,6 +9,8 @@ class RegistrationForm extends StatelessWidget {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
+  RegistrationForm({super.key});
+
   bool isValidEmail(String email) {
     return RegExp(r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$')
         .hasMatch(email);
@@ -15,7 +19,9 @@ class RegistrationForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Register')),
+      appBar: AppBar(
+        title: const Text('Register'),
+      ),
       body: Center(
         child: Card(
           child: Form(
@@ -52,9 +58,7 @@ class RegistrationForm extends StatelessWidget {
                       return null;
                     },
                   ),
-                  const SizedBox(
-                    height: 16,
-                  ),
+                  const SizedBox(height: 16),
                   TextFormField(
                     controller: emailController,
                     decoration: const InputDecoration(
@@ -64,7 +68,7 @@ class RegistrationForm extends StatelessWidget {
                       if (value!.isEmpty) {
                         return 'Please enter an email address';
                       }
-                      if (!isValidEmail(value!)) {
+                      if (!isValidEmail(value)) {
                         return 'Please enter a valid email address';
                       }
                       return null;
@@ -78,17 +82,13 @@ class RegistrationForm extends StatelessWidget {
                       labelText: 'Password',
                     ),
                     validator: (value) {
-                      RegExp regex = RegExp(
-                          r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
                       if (value!.length < 8) {
                         return "Password must be 8 bit long having a special character and a uppercase character also an integer";
                       }
                       return null;
                     },
                   ),
-                  const SizedBox(
-                    height: 16,
-                  ),
+                  const SizedBox(height: 16),
                   ElevatedButton(
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
