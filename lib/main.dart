@@ -23,8 +23,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: '/splash',
       routes: {
-        '/splash': (context) => SplashScreen(),
-        '/recipe': (context) => MyHomePage(
+        '/splash': (context) => const SplashScreen(),
+        '/recipe': (context) => const MyHomePage(
               title: "Recipe Rover App",
             ),
 
@@ -48,7 +48,9 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: const MyHomePage(title: 'Recipe Rover'),
+      home: const MyHomePage(
+        title: 'Recipe Rover',
+      ),
     );
   }
 }
@@ -70,32 +72,29 @@ class _MyHomePageState extends State<MyHomePage> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              const SizedBox(
-                height: 10,
-              ),
+              const SizedBox(height: 10),
               const Center(),
-              const SizedBox(
-                height: 10,
-              ),
+              const SizedBox(height: 10),
               Container(
                 height: 500,
                 width: 400,
                 decoration: const BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage("assets/logo.png"),
+                    image: AssetImage(
+                      "assets/logo.png",
+                    ),
                   ),
                 ),
               ),
-              const SizedBox(
-                height: 2,
-              ),
+              const SizedBox(height: 2),
               ElevatedButton(
                 onPressed: () {
                   Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => SignInForm(),
-                      ));
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => SignInForm(),
+                    ),
+                  );
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.white,
@@ -111,22 +110,22 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: Text(
                     'Log In',
                     style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.black),
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.black,
+                    ),
                   ),
                 ),
               ),
-              const SizedBox(
-                height: 20,
-              ),
+              const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
                   Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => RegistrationForm(),
-                      ));
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => RegistrationForm(),
+                    ),
+                  );
                 },
                 style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(
@@ -137,7 +136,10 @@ class _MyHomePageState extends State<MyHomePage> {
                   padding: EdgeInsets.symmetric(vertical: 20, horizontal: 90),
                   child: Text(
                     'Sign Up',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                 ),
               ),
