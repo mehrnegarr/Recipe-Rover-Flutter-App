@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -21,19 +23,21 @@ class RecipeScreen extends StatelessWidget {
           ],
         ),
       ),
-      body: RecipeGrid(),
+      body: const RecipeGrid(),
     );
   }
 }
 
 class RecipeGrid extends StatelessWidget {
+  const RecipeGrid({super.key});
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
       stream: FirebaseFirestore.instance.collection("recipes").snapshots(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return CircularProgressIndicator();
+          return const CircularProgressIndicator();
         }
 
         if (snapshot.hasError) {
@@ -41,7 +45,7 @@ class RecipeGrid extends StatelessWidget {
         }
 
         if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-          return Center(
+          return const Center(
             child: Text('No recipes found.'),
           );
         }
@@ -49,7 +53,7 @@ class RecipeGrid extends StatelessWidget {
         List<QueryDocumentSnapshot> recipeList = snapshot.data!.docs;
 
         return GridView.builder(
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
             crossAxisSpacing: 8.0,
             mainAxisSpacing: 8.0,
@@ -67,14 +71,14 @@ class RecipeGrid extends StatelessWidget {
 class RecipeCard extends StatelessWidget {
   final QueryDocumentSnapshot recipe;
 
-  RecipeCard(this.recipe);
+  const RecipeCard(this.recipe, {super.key});
 
   @override
   Widget build(BuildContext context) {
     0.0; // Assuming rating is a double field in your Firestore document
 
     return Card(
-      margin: EdgeInsets.all(8.0),
+      margin: const EdgeInsets.all(8.0),
       child: InkWell(
         onTap: () {
           // Navigate to a new screen to display the detailed recipe
@@ -88,15 +92,13 @@ class RecipeCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Display the image using the Image.asset widget
             Image.asset(
-              'recipe.png', // Adjust the image path as needed
-              height: 150, // Adjust the height as needed
-              width: double.infinity, // Make the image take the full width
-              fit: BoxFit.cover, // Adjust the BoxFit property as needed
+              'recipe.png',
+              height: 150,
+              width: double.infinity,
+              fit: BoxFit.cover,
             ),
-            SizedBox(height: 8.0), // Add some spacing below the image
-
+            const SizedBox(height: 8.0),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
               child: Column(
@@ -104,16 +106,14 @@ class RecipeCard extends StatelessWidget {
                 children: [
                   Text(
                     recipe["name"],
-                    style: TextStyle(
-                      fontSize: 20.0, // Increase the font size
+                    style: const TextStyle(
+                      fontSize: 20.0,
                       fontWeight: FontWeight.bold,
-                      color: Colors.black, // Change the font color
+                      color: Colors.black,
                     ),
                   ),
-                  SizedBox(
-                      height: 4.0), // Add some spacing below the recipe name
-
-                  Row(
+                  const SizedBox(height: 4.0),
+                  const Row(
                     children: [
                       Icon(
                         Icons.star,
@@ -141,7 +141,7 @@ class RecipeCard extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(height: 8.0), // Add some spacing below the recipe details
+            const SizedBox(height: 8.0),
           ],
         ),
       ),
@@ -152,7 +152,7 @@ class RecipeCard extends StatelessWidget {
 class RecipeDetails extends StatelessWidget {
   final QueryDocumentSnapshot recipe;
 
-  RecipeDetails(this.recipe);
+  const RecipeDetails(this.recipe, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -185,38 +185,28 @@ class RecipeDetails extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  // Add an image above the recipe name
                   ClipRRect(
-                    borderRadius: BorderRadius.circular(
-                        12.0), // Adjust the radius as needed
+                    borderRadius: BorderRadius.circular(12.0),
                     child: Image.asset(
-                      'recipe2.jpg', // Adjust the image path as needed
+                      'recipe2.jpg',
                       height: 250,
                       width: 300,
                       fit: BoxFit.cover,
                     ),
                   ),
-                  SizedBox(height: 16.0),
+                  const SizedBox(height: 16.0),
                   Text(
                     recipe["name"],
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 28.0,
                       fontWeight: FontWeight.bold,
                       color: Colors.orange,
-                      // You can change the font family
                     ),
                     textAlign: TextAlign.center,
                   ),
-
-                  SizedBox(height: 16.0),
-
-                  // ...
-
-                  // ...
-
-                  Divider(),
-
-                  Align(
+                  const SizedBox(height: 16.0),
+                  const Divider(),
+                  const Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
                       "INGREDIENTS",
@@ -227,14 +217,12 @@ class RecipeDetails extends StatelessWidget {
                       ),
                     ),
                   ),
-
-                  SizedBox(height: 8.0),
-
+                  const SizedBox(height: 8.0),
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
                       recipe["ingredients"],
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 16.0,
                         color: Colors.black87,
                         fontFamily: 'Nunito',
@@ -243,12 +231,9 @@ class RecipeDetails extends StatelessWidget {
                       ),
                     ),
                   ),
-
-                  Divider(),
-
-                  SizedBox(height: 16.0),
-
-                  Align(
+                  const Divider(),
+                  const SizedBox(height: 16.0),
+                  const Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
                       "RECIPE",
@@ -259,14 +244,12 @@ class RecipeDetails extends StatelessWidget {
                       ),
                     ),
                   ),
-
-                  SizedBox(height: 8.0),
-
+                  const SizedBox(height: 8.0),
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
                       recipe["steps"],
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 16.0,
                         color: Colors.black87,
                         letterSpacing: 0.3,
@@ -275,10 +258,6 @@ class RecipeDetails extends StatelessWidget {
                       ),
                     ),
                   ),
-
-// ...
-
-// ...
                 ],
               ),
             ),
