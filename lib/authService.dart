@@ -1,3 +1,5 @@
+// ignore_for_file: file_names, avoid_print
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -15,6 +17,7 @@ class AuthService {
     } catch (e) {
       print(e);
     }
+    return null;
   }
 
   Future<User?> signIn(String email, String password) async {
@@ -28,6 +31,7 @@ class AuthService {
     } catch (e) {
       print(e);
     }
+    return null;
   }
 
   signOut() async {
